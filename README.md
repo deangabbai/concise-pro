@@ -1,30 +1,50 @@
 # Concise Pro
 
-A Claude Code output style based on [built-in Concise](https://code.claude.com/docs/en/output-styles#concise). It asks Claude to do the work thoroughly, then cut anything you don’t need to read. That can mean dropping a whole section.
+A Claude Code output style for anyone who keeps asking for the TL;DR. It builds on [Concise](https://code.claude.com/docs/en/output-styles#concise) and keeps Claude’s coding instructions. The [prompt](concise-pro.md) ends with this check:
+
+> Before sending, ask whether a shorter reply would answer the user’s question just as well. If so, cut the extra material, even whole paragraphs or sections.
 
 ## Install
 
+[Download the style](https://github.com/deangabbai/concise-pro/releases/latest/download/concise-pro.md) into `~/.claude/output-styles/`, or install it from the terminal.
+
+<details>
+<summary>Copy the install command</summary>
+
 ```sh
-mkdir -p ~/.claude/output-styles
-curl -fsSL https://raw.githubusercontent.com/deangabbai/concise-pro/main/concise-pro.md -o ~/.claude/output-styles/concise-pro.md
+curl -fsSL --create-dirs \
+  -o ~/.claude/output-styles/concise-pro.md \
+  https://github.com/deangabbai/concise-pro/releases/latest/download/concise-pro.md
 ```
 
-Restart Claude Code and select the style for your project:
+</details>
+
+Restart Claude Code, then run:
 
 ```text
 /output-style Concise Pro
 ```
 
-[Read the full prompt](concise-pro.md).
-
 ## Example
 
-One prompt, two fresh Claude Code sessions, both using Sonnet 5.5 at medium effort:
+**Are we live?** In this example, CI passed and staging runs v2. Production still runs v1.
+
+**Concise Pro**
+
+> Not live. Production still runs v1 until the pending deploy approval is granted and the deploy completes. CI and staging are good, but the changelog and dashboard now describe a release users can't see yet.
+>
+> Next steps: get the approval, run the production deploy, then verify v2 is serving in prod. If the changelog or dashboard are already public-facing, consider holding or flagging them until then.
+
+<details>
+<summary>Compare with built-in Concise and see the exact prompt</summary>
+
+Both replies came from fresh Claude Code sessions using Sonnet 5.5 at medium effort.
+
+**Prompt**
 
 > Release handoff: CI passed. Staging runs v2. Production still runs v1 because deploy approval is pending. The changelog and dashboard are updated. Are we live?
 
-<details>
-<summary>Built-in Concise</summary>
+**Built-in Concise**
 
 > No, not live. Production still runs v1 until the pending deploy approval is granted and the rollout completes. Staging on v2 with passing CI means it's ready, not released.
 >
@@ -32,14 +52,5 @@ One prompt, two fresh Claude Code sessions, both using Sonnet 5.5 at medium effo
 > - Get the deploy approval.
 > - Confirm prod reports v2 after the rollout.
 > - Note that the changelog and dashboard already say v2, so they're ahead of reality. Consider holding or flagging them until prod actually switches, so users and teammates aren't misled.
-
-</details>
-
-<details>
-<summary>Concise Pro</summary>
-
-> Not live. Production still runs v1 until the pending deploy approval is granted and the deploy completes. CI and staging are good, but the changelog and dashboard now describe a release users can't see yet.
->
-> Next steps: get the approval, run the production deploy, then verify v2 is serving in prod. If the changelog or dashboard are already public-facing, consider holding or flagging them until then.
 
 </details>
