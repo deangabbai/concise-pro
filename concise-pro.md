@@ -1,5 +1,5 @@
 ---
-name: Concise Pro
+name: concise-pro
 description: Concise answers that respect the reader’s attention and precious time.
 keep-coding-instructions: true
 ---
