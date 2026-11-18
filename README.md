@@ -1,15 +1,23 @@
 # Concise Pro
 
-A Claude Code output style for anyone who keeps asking for the TL;DR. It builds on [Concise](https://code.claude.com/docs/en/output-styles#concise) and keeps Claude’s coding instructions. The [prompt](concise-pro.md) ends with this check:
+A Claude Code output style for anyone who keeps asking for the TL;DR. It builds on [built-in Concise](https://code.claude.com/docs/en/output-styles#concise) and keeps Claude’s coding instructions.
+
+**[See the exact diff from built-in Concise](https://github.com/deangabbai/concise-pro/commit/80aaef48ab9fabb34ef4f705aa73f41a19a691e5)** · [Read the prompt](concise-pro.md) · [Compare real replies](docs/examples.md)
+
+## What changes?
+
+Concise Pro asks Claude to make one more editing pass:
 
 > Before sending, ask whether a shorter reply would answer the user’s question just as well. If so, cut the extra material, even whole paragraphs or sections.
 
+It drops blanket instructions to report outcomes and decisions, give full detail on request, and reproduce error or test output in full. It keeps the instruction to preserve correctness. Claude decides what to say before choosing prose, a list, or a table.
+
 ## Install
 
-[Download the style](https://github.com/deangabbai/concise-pro/releases/latest/download/concise-pro.md) into `~/.claude/output-styles/`, or install it from the terminal.
+[Download the style](https://github.com/deangabbai/concise-pro/releases/latest/download/concise-pro.md) into `~/.claude/output-styles/`, or use the terminal command below.
 
 <details>
-<summary>Copy the install command</summary>
+<summary>Install with curl</summary>
 
 ```sh
 curl -fsSL --create-dirs \
@@ -19,38 +27,21 @@ curl -fsSL --create-dirs \
 
 </details>
 
-Restart Claude Code, then run:
+Restart Claude Code, then select the style for your project:
 
 ```text
 /output-style Concise Pro
 ```
 
-## Example
-
-**Are we live?** In this example, CI passed and staging runs v2. Production still runs v1.
-
-**Concise Pro**
-
-> Not live. Production still runs v1 until the pending deploy approval is granted and the deploy completes. CI and staging are good, but the changelog and dashboard now describe a release users can't see yet.
->
-> Next steps: get the approval, run the production deploy, then verify v2 is serving in prod. If the changelog or dashboard are already public-facing, consider holding or flagging them until then.
+To switch back, run `/output-style Concise`.
 
 <details>
-<summary>Compare with built-in Concise and see the exact prompt</summary>
+<summary>Which version of built-in Concise does the diff use?</summary>
 
-Both replies came from fresh Claude Code sessions using Sonnet 5.5 at medium effort.
+The comparison uses the built-in prompt from Claude Code **2.1.327** and the published **Concise Pro v0.1** file. The built-in name, description, and coding-instructions setting are shown as Markdown frontmatter so the files compare directly.
 
-**Prompt**
+Claude Code also sends a separate turn reminder. Built-in Concise gets “Be concise: lead with the result, skip preamble and narration, keep only what the user needs.” Custom styles get “Remember to follow the specific guidelines for this style.”
 
-> Release handoff: CI passed. Staging runs v2. Production still runs v1 because deploy approval is pending. The changelog and dashboard are updated. Are we live?
-
-**Built-in Concise**
-
-> No, not live. Production still runs v1 until the pending deploy approval is granted and the rollout completes. Staging on v2 with passing CI means it's ready, not released.
->
-> Before calling it live:
-> - Get the deploy approval.
-> - Confirm prod reports v2 after the rollout.
-> - Note that the changelog and dashboard already say v2, so they're ahead of reality. Consider holding or flagging them until prod actually switches, so users and teammates aren't misled.
+[Download the unified diff](https://github.com/deangabbai/concise-pro/commit/80aaef48ab9fabb34ef4f705aa73f41a19a691e5.diff).
 
 </details>
